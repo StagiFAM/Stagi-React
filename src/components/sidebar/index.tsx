@@ -1,25 +1,23 @@
 import { useState } from 'react';
 import { Container, Group } from '@mantine/core';
 import {
-  IconBellRinging,
-  IconFingerprint,
-  IconKey,
   IconSettings,
-  Icon2fa,
-  IconDatabaseImport,
-  IconReceipt2,
   IconLogout,
+  IconUsers,
+  IconCalendar,
+  IconBrandCashapp,
+  IconPackage,
+  IconFileAnalytics
 } from '@tabler/icons-react';
 import classes from './sidebar.module.css';
 
 const data = [
-  { link: '', label: 'Notifications', icon: IconBellRinging },
-  { link: '', label: 'Billing', icon: IconReceipt2 },
-  { link: '', label: 'Security', icon: IconFingerprint },
-  { link: '', label: 'SSH Keys', icon: IconKey },
-  { link: '', label: 'Databases', icon: IconDatabaseImport },
-  { link: '', label: 'Authentication', icon: Icon2fa },
-  { link: '', label: 'Other Settings', icon: IconSettings },
+  { link: '', label: 'Agenda', icon: IconCalendar },
+  { link: '', label: 'Clientes', icon: IconUsers },
+  { link: '', label: 'Finanças', icon: IconBrandCashapp },
+  { link: '', label: 'Estoque', icon: IconPackage },
+  { link: '', label: 'Relatório', icon: IconFileAnalytics },
+  { link: '', label: 'Configurações', icon: IconSettings },
 ];
 
 export default function NavbarSimple() {
@@ -42,7 +40,7 @@ export default function NavbarSimple() {
   ));
 
   return (
-    <Container>
+    <Container pr={40} pos={'relative'}>
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>
         <Group className={classes.header} justify="space-between">
@@ -54,7 +52,7 @@ export default function NavbarSimple() {
 
         <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
+          <span>Sair</span>
         </a>
       </div>
     </nav>

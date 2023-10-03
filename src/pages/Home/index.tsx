@@ -1,10 +1,8 @@
-import NavbarSimple from "../../components/sidebar";
+import Layout from "../../view/layout";
 
-function Home(){
+function Home () {
     return (
-        <>
-        <NavbarSimple/>
-        </>
+        <Layout/>
     )
 }
 
