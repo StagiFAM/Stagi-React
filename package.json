@@ -10,6 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.9",
+    "@fullcalendar/daygrid": "^6.1.9",
+    "@fullcalendar/interaction": "^6.1.9",
+    "@fullcalendar/list": "^6.1.9",
+    "@fullcalendar/react": "^6.1.9",
+    "@fullcalendar/timegrid": "^6.1.9",
     "@mantine/carousel": "^7.1.0",
     "@mantine/code-highlight": "^7.1.0",
     "@mantine/core": "^7.1.0",
@@ -37,7 +43,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
     "sort-by": "^1.2.0",
-    "styled-components": "^6.0.8"
+    "styled-components": "^6.0.8",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

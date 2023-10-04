@@ -22,13 +22,13 @@ function Login () {
     return (
       <Container size={520} my={40} mt={200}>
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <TextInput label="Email" placeholder="you@mantine.dev" required />
-        <PasswordInput label="Password" placeholder="Your password" required mt="md" />
+        <TextInput label="Email" placeholder="you@gmail.com" required />
+        <PasswordInput label="Senha" placeholder="Sua senha" required mt="md" />
         <Group justify="space-between" mt="lg">
-          <Checkbox label="Remember me" />
+          <Checkbox label="Lembrar-me" />
         </Group>
         <Button fullWidth mt="xl" onClick={entrarNaHome}>
-          Sign in
+          Entrar
         </Button>
       </Paper>
     </Container>
