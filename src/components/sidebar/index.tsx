@@ -10,33 +10,34 @@ import {
   IconFileAnalytics
 } from '@tabler/icons-react';
 import classes from './sidebar.module.css';
+import { Link, useLocation } from 'react-router-dom';
 
 const data = [
-  { link: '', label: 'Agenda', icon: IconCalendar },
-  { link: '', label: 'Clientes', icon: IconUsers },
-  { link: '', label: 'Finanças', icon: IconBrandCashapp },
-  { link: '', label: 'Estoque', icon: IconPackage },
-  { link: '', label: 'Relatório', icon: IconFileAnalytics },
-  { link: '', label: 'Configurações', icon: IconSettings },
+  { link: '/home', label: 'Agenda', icon: IconCalendar },
+  { link: '/client', label: 'Clientes', icon: IconUsers },
+  { link: '/finance', label: 'Finanças', icon: IconBrandCashapp },
+  { link: '/stock', label: 'Estoque', icon: IconPackage },
+  { link: '/report', label: 'Relatório', icon: IconFileAnalytics },
+  { link: '/settings', label: 'Configurações', icon: IconSettings },
 ];
 
 export default function NavbarSimple() {
-  const [active, setActive] = useState('Billing');
+  const location = useLocation();
+  const [active, setActive] = useState(() => {
+    const found = data.find(item => location.pathname.startsWith(item.link));
+    return found ? found.label : '';
+  });
 
   const links = data.map((item) => (
-    <a
-      className={classes.link}
-      data-active={item.label === active || undefined}
-      href={item.link}
+    <Link
+      to={item.link} 
+      className={`${classes.link} ${item.label === active ? classes.active : ''}`}
       key={item.label}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(item.label);
-      }}
+      onClick={() => setActive(item.label)}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
-    </a>
+    </Link>
   ));
 
   return (

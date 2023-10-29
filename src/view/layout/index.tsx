@@ -2,7 +2,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { AppShell, Burger, Group } from '@mantine/core';
 import './home.module.css'
 import NavbarSimple from "../../components/sidebar";
-import { GridHome } from '../gridHome';
+import Scheduler from '../../components/Scheduler';
 
 function Layout(){
     const [opened, { toggle }] = useDisclosure();
@@ -26,9 +26,6 @@ function Layout(){
         <AppShell.Navbar>
           <NavbarSimple/>
         </AppShell.Navbar>
-        <AppShell.Main>
-          <GridHome/>
-        </AppShell.Main>
       </AppShell>
     )
 }
