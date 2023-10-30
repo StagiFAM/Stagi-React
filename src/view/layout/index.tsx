@@ -2,9 +2,14 @@ import { useDisclosure } from '@mantine/hooks';
 import { AppShell, Burger, Group } from '@mantine/core';
 import './home.module.css'
 import NavbarSimple from "../../components/sidebar";
-import Scheduler from '../../components/Scheduler';
+import { ReactNode } from 'react';
 
-function Layout(){
+interface LayoutProps {
+  children: ReactNode
+  mainContent?: ReactNode
+}
+
+function Layout({ children, mainContent }: LayoutProps ){
     const [opened, { toggle }] = useDisclosure();
 
     return (
@@ -26,6 +31,7 @@ function Layout(){
         <AppShell.Navbar>
           <NavbarSimple/>
         </AppShell.Navbar>
+        <AppShell.Main>{mainContent ? mainContent : children}</AppShell.Main>
       </AppShell>
     )
 }
