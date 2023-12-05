@@ -4,7 +4,7 @@ import Layout from "../../view/layout";
 export default function Finance() {
     return (
         <>
-        <Layout/>
+        <Layout children={undefined}/>
         </>
     )
 

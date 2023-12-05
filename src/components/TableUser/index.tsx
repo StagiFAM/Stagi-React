@@ -5,22 +5,13 @@ import classes from './table.module.css';
 import addClientButton from '../addClientButton';
 import Demo from '../addClientButton';
 
-const data = [
-  {
-    name: 'Aline',
-    service: 'Cilios',
-    time: '10:20',
-  },
-];
-
-export default function TableUser() {
+export default function TableUser({ products }) {
   const [scrolled, setScrolled] = useState(false);
 
-  const rows = data.map((row) => (
-    <Table.Tr key={row.name}>
-      <Table.Td>{row.name}</Table.Td>
-      <Table.Td>{row.time}</Table.Td>
-      <Table.Td>{row.service}</Table.Td>
+  const rows = products.map((product: any, index: any) => (
+    <Table.Tr key={index}>
+      <Table.Td>{product.name}</Table.Td>
+      <Table.Td>{product.quantity}</Table.Td>
     </Table.Tr>
   ));
 
@@ -31,8 +22,7 @@ export default function TableUser() {
         <Demo/>
           <Table.Tr>
             <Table.Th>Nome</Table.Th>
-            <Table.Th>Horário</Table.Th>
-            <Table.Th>Serviço</Table.Th>
+            <Table.Th>Quantidade</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

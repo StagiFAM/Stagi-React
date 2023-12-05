@@ -3,7 +3,7 @@ import {
   EventApi,
   DateSelectArg,
   EventClickArg,
-  EventContentArg,
+  EventContentArg,    
   formatDate,
 } from '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/react'
@@ -11,7 +11,6 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { INITIAL_EVENTS, createEventId } from './event-utils'
-import './scheduler.css'
 
 interface DemoAppState {
   weekendsVisible: boolean
@@ -37,8 +36,14 @@ export default class Scheduler extends React.Component<{}, DemoAppState> {
               center: 'title',
               right: 'dayGridMonth,timeGridWeek,timeGridDay'
             }}
-            initialView='dayGridMonth'
+            locale="pt-br"
+            initialView='timeGridDay'
+            height="700px"
+            longPressDelay={1000}
+            eventLongPressDelay={1000}
+            selectLongPressDelay={1000}
             editable={true}
+            allDaySlot={false}
             selectable={true}
             selectMirror={true}
             dayMaxEvents={true}
@@ -48,6 +53,13 @@ export default class Scheduler extends React.Component<{}, DemoAppState> {
             eventContent={renderEventContent} // custom render function
             eventClick={this.handleEventClick}
             eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
+            buttonText={{
+              today: "Hoje",
+              month: "Mês",
+              week: "Semana",
+              day: "Dia",
+              list: "Lista",
+            }}
             /* you can update a remote database when these fire:
             eventAdd={function(){}}
             eventChange={function(){}}
@@ -61,16 +73,40 @@ export default class Scheduler extends React.Component<{}, DemoAppState> {
 
   renderSidebar() {
     return (
-      <div>
+      <div className='demo-app-sidebar'>
+        {/* <div className='demo-app-sidebar-section'>
+          <h2>Instructions</h2>
+          <ul>
+            <li>Select dates and you will be prompted to create a new event</li>
+            <li>Drag, drop, and resize events</li>
+            <li>Click an event to delete it</li>
+          </ul>
+        </div>
+        <div className='demo-app-sidebar-section'>
+          <label>
+            <input
+              type='checkbox'
+              checked={this.state.weekendsVisible}
+              onChange={this.handleWeekendsToggle}
+            ></input>
+            toggle weekends
+          </label>
+        </div>
+        <div className='demo-app-sidebar-section'>
+          <h2>All Events ({this.state.currentEvents.length})</h2>
+          <ul>
+            {this.state.currentEvents.map(renderSidebarEvent)}
+          </ul>
+        </div> */}
       </div>
     )
   }
 
-  handleWeekendsToggle = () => {
-    this.setState({
-      weekendsVisible: !this.state.weekendsVisible
-    })
-  }
+  // handleWeekendsToggle = () => {
+  //   this.setState({
+  //     weekendsVisible: !this.state.weekendsVisible
+  //   })
+  // }
 
   handleDateSelect = (selectInfo: DateSelectArg) => {
     let title = prompt('Please enter a new title for your event')

@@ -7,22 +7,24 @@ import {
   IconCalendar,
   IconBrandCashapp,
   IconPackage,
-  IconFileAnalytics
 } from '@tabler/icons-react';
 import classes from './sidebar.module.css';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const data = [
   { link: '/home', label: 'Agenda', icon: IconCalendar },
   { link: '/client', label: 'Clientes', icon: IconUsers },
   { link: '/finance', label: 'Finanças', icon: IconBrandCashapp },
   { link: '/stock', label: 'Estoque', icon: IconPackage },
-  { link: '/report', label: 'Relatório', icon: IconFileAnalytics },
   { link: '/settings', label: 'Configurações', icon: IconSettings },
 ];
 
 export default function NavbarSimple() {
-  const location = useLocation();
+  const navigate = useNavigate()
+  const handleLogout = () => {
+    navigate('/')
+  }
+  const location = useLocation()
   const [active, setActive] = useState(() => {
     const found = data.find(item => location.pathname.startsWith(item.link));
     return found ? found.label : '';
@@ -51,7 +53,7 @@ export default function NavbarSimple() {
 
       <div className={classes.footer}>
 
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+        <a href="#" className={classes.link} onClick={(event) => {event.preventDefault(); handleLogout()}}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Sair</span>
         </a>
