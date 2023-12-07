@@ -25,7 +25,7 @@ function Layout({ children, mainContent }: LayoutProps ){
         <AppShell.Header>
           <Group h="100%" px="md">
             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-            <strong>Stagi</strong>
+            <strong>Stagi Salon</strong>
           </Group>
         </AppShell.Header>
         <AppShell.Navbar>
