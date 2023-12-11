@@ -1,203 +1,115 @@
 import { useState } from "react";
 import Layout from "../../view/layout";
-import './stock.module.css'
+import { ItemData } from "../../@types/types";
+import { InventoryWrapper, StyledInputWrapper, StyledLabel } from "./style";
+import { Button, Modal, Text } from "@mantine/core";
+import ItemList from "../../context/ItemList";
 
 export default function Stock() {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [product, setProduct] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [categoria, setCategoria] = useState('');
-  const [dataCompra, setDataCompra] = useState('');
-  const [quantidade, setQuantidade] = useState('');
-  const [preco, setPreco] = useState('');
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const [BD, setBD] = useState<any[]>([]);
+  const [items, setItems] = useState<ItemData[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [newItem, setNewItem] = useState<ItemData>({
+    id: 0,
+    nome: '',
+    quantidade: 0,
+    marca: '',
+    dataValidade: '',
+    preco: 0,
+    inicio: '',
+    saida: '',
+  });
 
-  const openModal = () => {
-    setModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setModalVisible(false);
-  };
-
-  const handleCheckboxChange = (id: number) => {
-    const index = selectedIds.indexOf(id);
-    if (index === -1) {
-      setSelectedIds([...selectedIds, id]);
+  const handleAddItem = () => {
+    if (newItem.nome && newItem.marca && newItem.dataValidade && newItem.preco && newItem.inicio && newItem.saida) {
+      setItems([...items, newItem]);
+      setShowModal(false);
+      setNewItem({
+        id: 0,
+        nome: '',
+        quantidade: 0,
+        marca: '',
+        dataValidade: '',
+        preco: 0,
+        inicio: '',
+        saida: '',
+      });
     } else {
-      const newSelectedIds = [...selectedIds];
-      newSelectedIds.splice(index, 1);
-      setSelectedIds(newSelectedIds);
+      // Lógica para lidar com campos em branco
+      alert('Por favor, preencha todos os campos.');
     }
   };
 
-  const handleSubmit = () => {
-    const produto = {
-      product,
-      descricao,
-      categoria,
-      dataCompra,
-      quantidade,
-      preco,
-      id: BD.length,
-    };
-
-    setBD([...BD, produto]);
+  const handleDeleteItem = (id: number) => {
+    const updatedItems = items.filter((item) => item.id !== id);
+    setItems(updatedItems);
   };
 
-  const handleDelete = () => {
-    const newBD = BD.filter((_, index) => !selectedIds.includes(index));
-    setBD(newBD);
-    setSelectedIds([]);
+  const handleEditItem = (id: number) => {
+    // Implemente a lógica para editar um item aqui
   };
-
-  const handleEdit = () => {
-    const editedBD = [...BD];
-    selectedIds.forEach((index) => {
-      editedBD[index] = {
-        product,
-        descricao,
-        categoria,
-        dataCompra,
-        quantidade,
-        preco,
-        id: index,
-      };
-    });
-    setBD(editedBD);
-    setSelectedIds([]);
-  };
-
+  
     return (
         <Layout 
-        mainContent={<div>
-          <h1>Estoque</h1>
-      <div id="botoes1">
-        <button id="StockButton" onClick={openModal}>Gerenciar Estoque</button>
-        {modalVisible && (
-          <div id="myModal" className="modal">
-            <div className="modal-content">
-              <span className="close" onClick={closeModal}>
-                &times;
-              </span>
-              <h1>Gerenciador de produtos</h1>
-              <div id="wrap">
-                <input
-                  type="text"
-                  placeholder="Produto:"
-                  value={product}
-                  onChange={(e) => setProduct(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Descrição"
-                  value={descricao}
-                  onChange={(e) => setDescricao(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Categoria"
-                  value={categoria}
-                  onChange={(e) => setCategoria(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="DataCompra"
-                  value={dataCompra}
-                  onChange={(e) => setDataCompra(e.target.value)}
-                />
-                <input
-                  type="number"
-                  placeholder="Quantidade"
-                  value={quantidade}
-                  onChange={(e) => setQuantidade(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Preço"
-                  value={preco}
-                  onChange={(e) => setPreco(e.target.value)}
-                />
-              </div>
-              <div id="botoes">
-                <button onClick={handleSubmit}>Cadastrar</button>
-                <button onClick={handleDelete}>Excluir</button>
-                <button onClick={handleEdit}>Editar</button>
-              </div>
-              <div id="saida" className="tabelaModal">
-                <table id="Stocktable" width="100%">
-                  <thead>
-                    <tr>
-                      <td width="30px"></td>
-                      <td>Nome</td>
-                      <td>Descrição</td>
-                      <td>Categoria</td>
-                      <td>DataCompra</td>
-                      <td>Quant.</td>
-                      <td>Preço</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {BD.map((item, index) => (
-                      <tr key={index}>
-                        <td>
-                          <input
-                            type="checkbox"
-                            checked={selectedIds.includes(index)}
-                            onChange={() => handleCheckboxChange(index)}
-                          />
-                        </td>
-                        <td>{item.product}</td>
-                        <td>{item.descricao}</td>
-                        <td>{item.categoria}</td>
-                        <td>{item.dataCompra}</td>
-                        <td>{item.quantidade}</td>
-                        <td>{item.preco}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-      <div id="saida2" className="tabelaprincipal">
-        <table id="tabelaGrande" width="100%">
-          <thead>
-            <tr>
-              <td width="30px"></td>
-              <td>Nome</td>
-              <td>Descrição</td>
-              <td>Categoria</td>
-              <td>DataCompra</td>
-              <td>Quant.</td>
-              <td>Preço</td>
-            </tr>
-          </thead>
-          <tbody>
-            {BD.map((item, index) => (
-              <tr key={index}>
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={selectedIds.includes(index)}
-                    onChange={() => handleCheckboxChange(index)}
-                  />
-                </td>
-                <td>{item.product}</td>
-                <td>{item.descricao}</td>
-                <td>{item.categoria}</td>
-                <td>{item.dataCompra}</td>
-                <td>{item.quantidade}</td>
-                <td>{item.preco}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-        </div>}>
+        mainContent={<InventoryWrapper>
+          <Button onClick={() => setShowModal(true)}>Adicionar Item</Button>
+          <Text size="xl" style={{ margin: '20px 0' }}>
+
+          </Text>
+          <ItemList items={items} onDelete={handleDeleteItem} onEdit={handleEditItem} />
+
+          <Modal opened={showModal} onClose={() => setShowModal(false)} title="Adicionar Novo Item">
+            <StyledInputWrapper>
+              <StyledLabel>Nome:</StyledLabel>
+              <input
+                type="text"
+                value={newItem.nome}
+                onChange={(e) => setNewItem({ ...newItem, nome: e.target.value })} />
+            </StyledInputWrapper>
+            <StyledInputWrapper>
+              <StyledLabel>Quantidade:</StyledLabel>
+              <input
+                type="number"
+                value={newItem.quantidade}
+                onChange={(e) => setNewItem({ ...newItem, quantidade: Number(e.target.value) })} />
+            </StyledInputWrapper>
+            <StyledInputWrapper>
+              <StyledLabel>Marca:</StyledLabel>
+              <input
+                type="text"
+                value={newItem.marca}
+                onChange={(e) => setNewItem({ ...newItem, marca: e.target.value })} />
+            </StyledInputWrapper>
+            <StyledInputWrapper>
+              <StyledLabel>Data de Validade:</StyledLabel>
+              <input
+                type="text"
+                value={newItem.dataValidade}
+                onChange={(e) => setNewItem({ ...newItem, dataValidade: e.target.value })} />
+            </StyledInputWrapper>
+            <StyledInputWrapper>
+              <StyledLabel>Preço:</StyledLabel>
+              <input
+                type="number"
+                value={newItem.preco}
+                onChange={(e) => setNewItem({ ...newItem, preco: Number(e.target.value) })} />
+            </StyledInputWrapper>
+            <StyledInputWrapper>
+              <StyledLabel>Início:</StyledLabel>
+              <input
+                type="text"
+                value={newItem.inicio}
+                onChange={(e) => setNewItem({ ...newItem, inicio: e.target.value })} />
+            </StyledInputWrapper>
+            <StyledInputWrapper>
+              <StyledLabel>Saída:</StyledLabel>
+              <input
+                type="text"
+                value={newItem.saida}
+                onChange={(e) => setNewItem({ ...newItem, saida: e.target.value })} />
+            </StyledInputWrapper>
+            <Button onClick={handleAddItem}>Adicionar</Button>
+          </Modal>
+        </InventoryWrapper>} children={undefined}>
         </Layout>
     )
 

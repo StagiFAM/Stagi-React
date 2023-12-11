@@ -5,7 +5,7 @@ function Home () {
         
     return (
         <Layout 
-        mainContent={<Scheduler/>} 
+        mainContent={<Scheduler />} 
         children={undefined} />
      )
 }
